@@ -3,10 +3,17 @@ export function buildFilterChain(filters, fields) {
     return () => true
   }
 
-  const useOr = filters.some((f) => f.operator === 'OR')
+  const fieldIds = new Set(fields.map((f) => f.id))
+  const validFilters = filters.filter((f) => fieldIds.has(f.field))
+
+  if (validFilters.length === 0) {
+    return () => true
+  }
+
+  const useOr = validFilters.some((f) => f.operator === 'OR')
 
   return (row) => {
-    const matches = filters.map((filter) => {
+    const matches = validFilters.map((filter) => {
       const value = row[filter.field]
 
       if (filter.type === 'equal') {
