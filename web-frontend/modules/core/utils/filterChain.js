@@ -1,3 +1,27 @@
+function applyFilter(filter, row) {
+  const value = row[filter.field]
+
+  switch (filter.type) {
+    case 'equal':
+      return (
+        value !== null &&
+        value !== undefined &&
+        String(value) === String(filter.value)
+      )
+    case 'contains':
+      if (value === null || value === undefined) {
+        return false
+      }
+      return String(value)
+        .toLowerCase()
+        .includes(String(filter.value).toLowerCase())
+    case 'not_empty':
+      return value !== null && value !== undefined && value !== ''
+    default:
+      return true
+  }
+}
+
 export function buildFilterChain(filters, fields) {
   if (!filters || filters.length === 0) {
     return () => true
@@ -13,37 +37,9 @@ export function buildFilterChain(filters, fields) {
   const useOr = validFilters.some((f) => f.operator === 'OR')
 
   return (row) => {
-    const matches = validFilters.map((filter) => {
-      const value = row[filter.field]
-
-      if (filter.type === 'equal') {
-        return (
-          value !== null &&
-          value !== undefined &&
-          String(value) === String(filter.value)
-        )
-      }
-
-      if (filter.type === 'contains') {
-        if (value === null || value === undefined) {
-          return false
-        }
-        return String(value)
-          .toLowerCase()
-          .includes(String(filter.value).toLowerCase())
-      }
-
-      if (filter.type === 'not_empty') {
-        return value !== null && value !== undefined && value !== ''
-      }
-
-      return true
-    })
-
     if (useOr) {
-      return matches.some((m) => m)
-    } else {
-      return matches.every((m) => m)
+      return validFilters.some((f) => applyFilter(f, row))
     }
+    return validFilters.every((f) => applyFilter(f, row))
   }
 }
