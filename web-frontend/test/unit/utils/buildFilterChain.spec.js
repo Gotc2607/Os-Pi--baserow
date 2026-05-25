@@ -93,4 +93,28 @@ describe('buildFilterChain', () => {
     const fn = buildFilterChain(filters, FIELDS)
     expect(fn({ nome: 'Joao' })).toBe(false)
   })
+
+  test('[C7] not_empty: campo preenchido retorna true', () => {
+    const filters = [
+      { field: 'nome', type: 'not_empty', value: '', operator: 'AND' },
+    ]
+    const fn = buildFilterChain(filters, FIELDS)
+    expect(fn({ nome: 'Joao' })).toBe(true)
+  })
+
+  test('[C7] not_empty: campo vazio retorna false', () => {
+    const filters = [
+      { field: 'nome', type: 'not_empty', value: '', operator: 'AND' },
+    ]
+    const fn = buildFilterChain(filters, FIELDS)
+    expect(fn({ nome: '' })).toBe(false)
+  })
+
+  test('[C7] not_empty: campo null retorna false', () => {
+    const filters = [
+      { field: 'nome', type: 'not_empty', value: '', operator: 'AND' },
+    ]
+    const fn = buildFilterChain(filters, FIELDS)
+    expect(fn({ nome: null })).toBe(false)
+  })
 })
