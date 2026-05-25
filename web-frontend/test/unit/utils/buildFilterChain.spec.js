@@ -51,4 +51,22 @@ describe('buildFilterChain', () => {
     const fn = buildFilterChain(filters, FIELDS)
     expect(fn({ nome: 'Joao', idade: '25' })).toBe(false)
   })
+
+  test('[C4] OR: apenas o primeiro satisfeito retorna true', () => {
+    const filters = [
+      { field: 'nome', type: 'equal', value: 'Joao', operator: 'OR' },
+      { field: 'idade', type: 'equal', value: '99', operator: 'OR' },
+    ]
+    const fn = buildFilterChain(filters, FIELDS)
+    expect(fn({ nome: 'Joao', idade: '25' })).toBe(true)
+  })
+
+  test('[C4] OR: nenhum satisfeito retorna false', () => {
+    const filters = [
+      { field: 'nome', type: 'equal', value: 'Joao', operator: 'OR' },
+      { field: 'idade', type: 'equal', value: '99', operator: 'OR' },
+    ]
+    const fn = buildFilterChain(filters, FIELDS)
+    expect(fn({ nome: 'Maria', idade: '25' })).toBe(false)
+  })
 })
