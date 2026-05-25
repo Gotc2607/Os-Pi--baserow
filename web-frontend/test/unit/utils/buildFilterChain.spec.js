@@ -77,4 +77,20 @@ describe('buildFilterChain', () => {
     const fn = buildFilterChain(filters, FIELDS)
     expect(fn({ nome: 'Qualquer' })).toBe(true)
   })
+
+  test('[C6] contains: texto parcial retorna true', () => {
+    const filters = [
+      { field: 'nome', type: 'contains', value: 'Jo', operator: 'AND' },
+    ]
+    const fn = buildFilterChain(filters, FIELDS)
+    expect(fn({ nome: 'Joao da Silva' })).toBe(true)
+  })
+
+  test('[C6] contains: texto que NAO contem retorna false', () => {
+    const filters = [
+      { field: 'nome', type: 'contains', value: 'xyz', operator: 'AND' },
+    ]
+    const fn = buildFilterChain(filters, FIELDS)
+    expect(fn({ nome: 'Joao' })).toBe(false)
+  })
 })
