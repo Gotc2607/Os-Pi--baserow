@@ -33,6 +33,10 @@ export function buildFilterChain(filters, fields) {
           .includes(String(filter.value).toLowerCase())
       }
 
+      if (filter.type === 'not_empty') {
+        return value !== null && value !== undefined && value !== ''
+      }
+
       return true
     })
 
