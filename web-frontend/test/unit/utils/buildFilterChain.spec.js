@@ -69,4 +69,12 @@ describe('buildFilterChain', () => {
     const fn = buildFilterChain(filters, FIELDS)
     expect(fn({ nome: 'Maria', idade: '25' })).toBe(false)
   })
+
+  test('[C5] filtro com field inexistente e ignorado (como se nao estivesse)', () => {
+    const filters = [
+      { field: 'inexistente', type: 'equal', value: 'x', operator: 'AND' },
+    ]
+    const fn = buildFilterChain(filters, FIELDS)
+    expect(fn({ nome: 'Qualquer' })).toBe(true)
+  })
 })
