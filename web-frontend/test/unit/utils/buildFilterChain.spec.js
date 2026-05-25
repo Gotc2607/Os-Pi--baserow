@@ -33,4 +33,22 @@ describe('buildFilterChain', () => {
     const fn = buildFilterChain(filters, FIELDS)
     expect(fn({ nome: 'Maria', idade: 25 })).toBe(false)
   })
+
+  test('[C3] AND: ambos satisfeitos retorna true', () => {
+    const filters = [
+      { field: 'nome', type: 'equal', value: 'Joao', operator: 'AND' },
+      { field: 'idade', type: 'equal', value: '30', operator: 'AND' },
+    ]
+    const fn = buildFilterChain(filters, FIELDS)
+    expect(fn({ nome: 'Joao', idade: '30' })).toBe(true)
+  })
+
+  test('[C3] AND: so um satisfeito retorna false', () => {
+    const filters = [
+      { field: 'nome', type: 'equal', value: 'Joao', operator: 'AND' },
+      { field: 'idade', type: 'equal', value: '30', operator: 'AND' },
+    ]
+    const fn = buildFilterChain(filters, FIELDS)
+    expect(fn({ nome: 'Joao', idade: '25' })).toBe(false)
+  })
 })
