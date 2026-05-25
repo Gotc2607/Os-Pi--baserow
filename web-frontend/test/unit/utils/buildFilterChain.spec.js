@@ -17,4 +17,20 @@ describe('buildFilterChain', () => {
     const fn = buildFilterChain(null, FIELDS)
     expect(fn({})).toBe(true)
   })
+
+  test('[C2] filtro equal: linha que bate com o valor retorna true', () => {
+    const filters = [
+      { field: 'nome', type: 'equal', value: 'Joao', operator: 'AND' },
+    ]
+    const fn = buildFilterChain(filters, FIELDS)
+    expect(fn({ nome: 'Joao', idade: 30 })).toBe(true)
+  })
+
+  test('[C2] filtro equal: linha que NAO bate retorna false', () => {
+    const filters = [
+      { field: 'nome', type: 'equal', value: 'Joao', operator: 'AND' },
+    ]
+    const fn = buildFilterChain(filters, FIELDS)
+    expect(fn({ nome: 'Maria', idade: 25 })).toBe(false)
+  })
 })
