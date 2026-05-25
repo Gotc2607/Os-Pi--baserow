@@ -24,6 +24,15 @@ export function buildFilterChain(filters, fields) {
         )
       }
 
+      if (filter.type === 'contains') {
+        if (value === null || value === undefined) {
+          return false
+        }
+        return String(value)
+          .toLowerCase()
+          .includes(String(filter.value).toLowerCase())
+      }
+
       return true
     })
 
