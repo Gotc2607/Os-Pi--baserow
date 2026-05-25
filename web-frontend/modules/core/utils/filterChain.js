@@ -3,8 +3,10 @@ export function buildFilterChain(filters, fields) {
     return () => true
   }
 
+  const useOr = filters.some((f) => f.operator === 'OR')
+
   return (row) => {
-    return filters.every((filter) => {
+    const matches = filters.map((filter) => {
       const value = row[filter.field]
 
       if (filter.type === 'equal') {
@@ -17,5 +19,11 @@ export function buildFilterChain(filters, fields) {
 
       return true
     })
+
+    if (useOr) {
+      return matches.some((m) => m)
+    } else {
+      return matches.every((m) => m)
+    }
   }
 }
