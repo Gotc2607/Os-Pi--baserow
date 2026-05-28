@@ -1,3 +1,4 @@
 export function highlightSearchTerm(text, term) {
-  return text.replace(term, `<mark>${term}</mark>`)
+  const regex = new RegExp(term, 'g')
+  return text.replace(regex, `<mark>${term}</mark>`)
 }
