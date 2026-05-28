@@ -12,4 +12,10 @@ describe('highlightSearchTerm', () => {
     const result = highlightSearchTerm('oi oi oi', 'oi')
     expect(result).toBe('<mark>oi</mark> <mark>oi</mark> <mark>oi</mark>') // [cite: 421, 422, 423, 424]
   })
+
+  // Ignorar maiúsculas e minúsculas
+  test('é case-insensitive por padrão', () => {
+    const result = highlightSearchTerm('Baserow baserow BASEROW', 'baserow')
+    expect(result).toBe('<mark>Baserow</mark> <mark>baserow</mark> <mark>BASEROW</mark>') // [cite: 426, 427, 428, 429, 430]
+  })
 })
