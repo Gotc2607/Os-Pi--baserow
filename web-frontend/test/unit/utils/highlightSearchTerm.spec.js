@@ -40,4 +40,9 @@ describe('highlightSearchTerm', () => {
   test('term vazio retorna text original', () => {
     expect(highlightSearchTerm('Olá mundo', '')).toBe('Olá mundo')
   })
+
+  // Null
+  test('null text retorna string vazia', () => {
+    expect(highlightSearchTerm(null, 'abc')).toBe('')
+  })
 })
