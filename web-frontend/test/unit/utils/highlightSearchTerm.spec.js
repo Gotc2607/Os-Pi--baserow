@@ -45,4 +45,10 @@ describe('highlightSearchTerm', () => {
   test('null text retorna string vazia', () => {
     expect(highlightSearchTerm(null, 'abc')).toBe('')
   })
+
+  // Caracteres especiais
+  test('term com caracteres especiais de regex não quebra', () => {
+    const result = highlightSearchTerm('preço: R$10.00', 'R$10.00')
+    expect(result).toBe('preço: <mark>R$10.00</mark>')
+  })
 })
