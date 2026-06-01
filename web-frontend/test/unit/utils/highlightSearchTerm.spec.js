@@ -24,4 +24,10 @@ describe('highlightSearchTerm', () => {
     const result = highlightSearchTerm('Hello HELLO hello', 'hello', { caseSensitive: true })
     expect(result).toBe('Hello HELLO <mark>hello</mark>')
   })
+
+  // Tag customizada
+  test('usa tag customizada', () => {
+    const result = highlightSearchTerm('Baserow, Baserow!', 'Baserow', { tag: 'strong' })
+    expect(result).toBe('<strong>Baserow</strong>, <strong>Baserow</strong>!')
+  })
 })
