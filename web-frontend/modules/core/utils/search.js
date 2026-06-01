@@ -1,5 +1,5 @@
 export function highlightSearchTerm(text, term, options = {}) {
-  if (!term) return text
+  if (!text || !term) return text || ''
   
   const tag = options.tag || 'mark'
   const flags = options.caseSensitive ? 'g' : 'gi'
