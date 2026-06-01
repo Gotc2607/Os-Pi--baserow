@@ -30,4 +30,9 @@ describe('highlightSearchTerm', () => {
     const result = highlightSearchTerm('Baserow, Baserow!', 'Baserow', { tag: 'strong' })
     expect(result).toBe('<strong>Baserow</strong>, <strong>Baserow</strong>!')
   })
+
+  // Texto vazio
+  test('text vazio retorna string vazia', () => {
+    expect(highlightSearchTerm('', 'abc')).toBe('')
+  })
 })
