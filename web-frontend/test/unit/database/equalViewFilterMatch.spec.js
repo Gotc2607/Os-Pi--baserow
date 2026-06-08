@@ -38,4 +38,10 @@ describe('EqualViewFilterType.matches - Testes de Caixa-Preta e Caixa-Branca', (
       expect(equalMatches('', 'a')).toBe(false)
     })
   })
+
+  describe('C5: normalizacao', () => {
+    test('C5-01: espacos nas bordas e maiusculas sao normalizados na comparacao', () => {
+      expect(equalMatches('  Joao  ', 'joao')).toBe(true)
+    })
+  })
 })
