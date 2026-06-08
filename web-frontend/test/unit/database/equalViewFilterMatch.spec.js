@@ -16,4 +16,10 @@ describe('EqualViewFilterType.matches - Testes de Caixa-Preta e Caixa-Branca', (
       expect(equalMatches('Maria', 'Joao')).toBe(false)
     })
   })
+
+  describe('C2: filtro vazio', () => {
+    test('C2-01: filtro vazio retorna null para nao aplicar filtro', () => {
+      expect(equalMatches('Joao', '')).toBe(null)
+    })
+  })
 })
