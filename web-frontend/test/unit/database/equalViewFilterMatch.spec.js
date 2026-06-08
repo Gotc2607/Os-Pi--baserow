@@ -28,4 +28,14 @@ describe('EqualViewFilterType.matches - Testes de Caixa-Preta e Caixa-Branca', (
       expect(equalMatches(null, 'Joao')).toBe(false)
     })
   })
+
+  describe('C4: valores limite', () => {
+    test('C4-01: menor texto valido com 1 caractere retorna true', () => {
+      expect(equalMatches('a', 'a')).toBe(true)
+    })
+
+    test('C4-02: valor vazio contra filtro de 1 caractere retorna false', () => {
+      expect(equalMatches('', 'a')).toBe(false)
+    })
+  })
 })
