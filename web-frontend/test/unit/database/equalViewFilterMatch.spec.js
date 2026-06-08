@@ -22,4 +22,10 @@ describe('EqualViewFilterType.matches - Testes de Caixa-Preta e Caixa-Branca', (
       expect(equalMatches('Joao', '')).toBe(null)
     })
   })
+
+  describe('C3: rowValue null', () => {
+    test('C3-01: rowValue null com filtro preenchido retorna false', () => {
+      expect(equalMatches(null, 'Joao')).toBe(false)
+    })
+  })
 })
