@@ -44,4 +44,22 @@ describe('EqualViewFilterType.matches - Testes de Caixa-Preta e Caixa-Branca', (
       expect(equalMatches('  Joao  ', 'joao')).toBe(true)
     })
   })
+
+  describe('C6: cenarios MC/DC do metodo matches', () => {
+    test('MC/DC [M1]: comparacao final verdadeira retorna true', () => {
+      expect(equalMatches('abc', 'abc')).toBe(true)
+    })
+
+    test('MC/DC [M2]: rowValue null influencia o fluxo e retorna false', () => {
+      expect(equalMatches(null, 'abc')).toBe(false)
+    })
+
+    test('MC/DC [M3]: filterVal vazio retorna null', () => {
+      expect(equalMatches('abc', '')).toBe(null)
+    })
+
+    test('MC/DC [M4]: valores normalizados diferentes retornam false', () => {
+      expect(equalMatches('abc', 'xyz')).toBe(false)
+    })
+  })
 })
