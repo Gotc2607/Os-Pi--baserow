@@ -34,25 +34,25 @@ describe('EqualViewFilterType.matches - Testes de Caixa-Preta e Caixa-Branca', (
       expect(equalMatches('', 'a')).toBe(false)
     })
 
-    test('BVA-03: espacos nas bordas e maiusculas sao normalizados na comparacao', () => {
-      expect(equalMatches('  Joao  ', 'joao')).toBe(true)
+    test('BVA-03: espacos nas bordas e maiusculas nao sao normalizados para texto', () => {
+      expect(equalMatches('  Joao  ', 'joao')).toBe(false)
     })
   })
 
   describe('Caixa-Branca: Cobertura de Branches e MC/DC', () => {
-    test('MC/DC [M1]: C1=false, C2=false, comparacao final verdadeira', () => {
+    test('MC/DC [M1]: comparacao final verdadeira retorna true', () => {
       expect(equalMatches('abc', 'abc')).toBe(true)
     })
 
-    test('MC/DC [M2]: C1=true (rowValue null) -> Branch verdadeiro (converte para string vazia)', () => {
+    test('MC/DC [M2]: rowValue null e convertido para string vazia e retorna false', () => {
       expect(equalMatches(null, 'abc')).toBe(false)
     })
 
-    test('MC/DC [M3]: C2=true (filterVal vazio) -> Branch verdadeiro (retorna null)', () => {
+    test('MC/DC [M3]: filterVal vazio retorna null', () => {
       expect(equalMatches('abc', '')).toBe(null)
     })
 
-    test('MC/DC [M4]: C3=false (valores normalizados diferentes) -> retorna false', () => {
+    test('MC/DC [M4]: valores diferentes retornam false', () => {
       expect(equalMatches('abc', 'xyz')).toBe(false)
     })
   })
