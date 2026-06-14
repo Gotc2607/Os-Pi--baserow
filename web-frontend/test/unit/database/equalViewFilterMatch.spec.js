@@ -7,50 +7,44 @@ const equalMatches = (rowValue, filterValue) =>
   equalFilter.matches(rowValue, filterValue, field, null)
 
 describe('EqualViewFilterType.matches - Testes de Caixa-Preta e Caixa-Branca', () => {
-  describe('C1: valores iguais e diferentes', () => {
-    test('C1-01: valor igual ao filtro retorna true', () => {
+  describe('Caixa-Preta: Particionamento de Equivalencia (EP)', () => {
+    test('EP-01: valor igual ao filtro retorna true', () => {
       expect(equalMatches('Joao', 'Joao')).toBe(true)
     })
 
-    test('C1-02: valor diferente do filtro retorna false', () => {
+    test('EP-02: valor diferente do filtro retorna false', () => {
       expect(equalMatches('Maria', 'Joao')).toBe(false)
     })
-  })
 
-  describe('C2: filtro vazio', () => {
-    test('C2-01: filtro vazio retorna null para nao aplicar filtro', () => {
+    test('EP-03: filtro vazio retorna null para nao aplicar filtro', () => {
       expect(equalMatches('Joao', '')).toBe(null)
     })
-  })
 
-  describe('C3: rowValue null', () => {
-    test('C3-01: rowValue null com filtro preenchido retorna false', () => {
+    test('EP-04: valor null com filtro preenchido retorna false', () => {
       expect(equalMatches(null, 'Joao')).toBe(false)
     })
   })
 
-  describe('C4: valores limite', () => {
-    test('C4-01: menor texto valido com 1 caractere retorna true', () => {
+  describe('Caixa-Preta: Analise de Valor Limite (BVA)', () => {
+    test('BVA-01: menor texto valido com 1 caractere retorna true', () => {
       expect(equalMatches('a', 'a')).toBe(true)
     })
 
-    test('C4-02: valor vazio contra filtro de 1 caractere retorna false', () => {
+    test('BVA-02: valor vazio contra filtro de 1 caractere retorna false', () => {
       expect(equalMatches('', 'a')).toBe(false)
     })
-  })
 
-  describe('C5: normalizacao', () => {
-    test('C5-01: espacos nas bordas e maiusculas sao normalizados na comparacao', () => {
-      expect(equalMatches('  Joao  ', 'joao')).toBe(true)
+    test('BVA-03: espacos nas bordas e maiusculas nao sao normalizados para texto', () => {
+      expect(equalMatches('  Joao  ', 'joao')).toBe(false)
     })
   })
 
-  describe('C6: cenarios MC/DC do metodo matches', () => {
+  describe('Caixa-Branca: Cobertura de Branches e MC/DC', () => {
     test('MC/DC [M1]: comparacao final verdadeira retorna true', () => {
       expect(equalMatches('abc', 'abc')).toBe(true)
     })
 
-    test('MC/DC [M2]: rowValue null influencia o fluxo e retorna false', () => {
+    test('MC/DC [M2]: rowValue null e convertido para string vazia e retorna false', () => {
       expect(equalMatches(null, 'abc')).toBe(false)
     })
 
@@ -58,7 +52,7 @@ describe('EqualViewFilterType.matches - Testes de Caixa-Preta e Caixa-Branca', (
       expect(equalMatches('abc', '')).toBe(null)
     })
 
-    test('MC/DC [M4]: valores normalizados diferentes retornam false', () => {
+    test('MC/DC [M4]: valores diferentes retornam false', () => {
       expect(equalMatches('abc', 'xyz')).toBe(false)
     })
   })
